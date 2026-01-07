@@ -19,13 +19,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenDetail }) => {
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-md border border-slate-100 flex flex-col h-full transition-transform hover:translate-y-[-4px] hover:shadow-lg">
-      
+
       {/* HEADER SECTION */}
       {isLoan ? (
         <div className="p-5 pb-2">
           <div className="flex items-center justify-between mb-4">
-            <div className="w-14 h-14 bg-slate-50 p-2 rounded-xl border border-slate-100 flex items-center justify-center">
-              <img src={project.logo} alt="logo" className="w-full h-full object-contain" />
+            <div className="w-14 h-14 bg-white p-1 rounded-full border border-slate-100 flex items-center justify-center overflow-hidden shadow-sm">
+              <img src={project.logo} alt="logo" className="w-full h-full object-cover" />
             </div>
             <span className="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black rounded-lg uppercase tracking-wider">
               VAY TIÊU DÙNG
@@ -36,9 +36,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenDetail }) => {
       ) : (
         <div className="p-0">
           <div className="h-44 bg-slate-100 overflow-hidden flex items-center justify-center relative">
-            <img 
-              src={project.coverImage} 
-              alt={project.name} 
+            <img
+              src={project.coverImage}
+              alt={project.name}
               className="h-full w-full object-cover transition-transform group-hover:scale-105"
             />
             <div className="absolute top-3 right-3">
@@ -101,7 +101,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenDetail }) => {
 
       {/* CTA SECTION */}
       <div className="px-5 pb-5 mt-auto">
-        <a 
+        <a
           href={project.affiliateLink}
           target="_blank"
           rel="noopener noreferrer"
@@ -111,13 +111,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenDetail }) => {
         </a>
 
         <div className="grid grid-cols-2 gap-2 mb-4">
-          <button 
+          <button
             onClick={() => onOpenDetail(project)}
             className="flex items-center justify-center gap-1.5 py-2.5 px-1 bg-slate-50 text-slate-600 text-[10px] font-bold rounded-lg border border-slate-200 hover:bg-slate-100 transition-colors"
           >
             <Eye size={14} className="text-blue-500" /> Xem chi tiết
           </button>
-          <button 
+          <button
             onClick={handleSupportClick}
             className="flex items-center justify-center gap-1.5 py-2.5 px-1 bg-blue-50 text-blue-700 text-[10px] font-bold rounded-lg border border-blue-100 hover:bg-blue-100 transition-colors"
           >
