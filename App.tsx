@@ -6,15 +6,26 @@ import ProductPopup from './components/ProductPopup';
 import AdminDashboard from './components/AdminDashboard';
 import LoanCalculator from './components/LoanCalculator';
 import CardComparison from './components/CardComparison';
+import GuidePage from './components/GuidePage';
 import { Project, ProjectType } from './types';
 import { INITIAL_PROJECTS, SUPPORT_ZALO } from './constants';
 
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'home' | 'loans' | 'cards' | 'comparison' | 'calc' | 'profile'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'loans' | 'cards' | 'comparison' | 'calc' | 'profile' | 'guides'>('home');
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // Initial Routing Logic
+  React.useLayoutEffect(() => {
+    const path = window.location.pathname;
+    if (path === '/quantrihethong') {
+      setActiveTab('profile');
+    } else if (path === '/huong-dan') {
+      setActiveTab('guides');
+    }
+  }, []);
 
   const [appConfig, setAppConfig] = useState({
     heroTitle: 'Tài Chính Thông Minh',
@@ -78,7 +89,7 @@ const App: React.FC = () => {
       {/* Quick Access */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { id: 'comparison', label: 'So sánh thẻ', icon: Layers, color: 'bg-blue-600' },
+          { id: 'comparison', label: 'So sánh thẻ tín dụng', icon: Layers, color: 'bg-blue-600' },
           { id: 'calc', label: 'Ước tính khoản vay', icon: Calculator, color: 'bg-amber-500' },
           { id: 'cards', label: 'Thẻ tín dụng', icon: CreditCard, color: 'bg-indigo-500' },
           { id: 'loans', label: 'Vay tiêu dùng', icon: DollarSign, color: 'bg-emerald-500' }
@@ -130,7 +141,7 @@ const App: React.FC = () => {
             {[
               { id: 'home', label: 'Trang chủ', icon: Home },
               { id: 'calc', label: 'Máy tính khoản vay', icon: Calculator },
-              { id: 'comparison', label: 'So sánh sản phẩm', icon: Layers },
+              { id: 'comparison', label: 'So sánh thẻ tín dụng', icon: Layers },
             ].map(item => (
               <button
                 key={item.id}
@@ -142,10 +153,13 @@ const App: React.FC = () => {
             ))}
             <div className="pt-4 mt-4 border-t border-slate-50">
               <button
-                onClick={() => setActiveTab('profile')}
-                className={`w-full flex items-center gap-3 px-4 py-3 font-medium rounded-xl transition-colors ${activeTab === 'profile' ? 'bg-blue-50 text-blue-600' : 'text-slate-600 hover:bg-slate-50'}`}
+                onClick={() => setActiveTab('guides' as any)}
+                className={`w-full flex items-center gap-3 px-4 py-3 font-medium rounded-xl transition-colors ${activeTab === 'guides' ? 'bg-blue-50 text-blue-600' : 'text-slate-600 hover:bg-slate-50'}`}
               >
-                <User size={18} /> Quản trị hệ thống
+                <div className="w-5 h-5 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full flex items-center justify-center shadow-sm">
+                  <span className="font-bold text-[10px]">?</span>
+                </div>
+                Hướng dẫn đăng ký
               </button>
             </div>
           </nav>
@@ -227,6 +241,8 @@ const App: React.FC = () => {
             {activeTab === 'comparison' && <CardComparison onSelectCard={setSelectedProject} projects={projects} />}
 
             {activeTab === 'profile' && <AdminDashboard />}
+
+            {activeTab === 'guides' && <GuidePage projects={projects} />}
           </div>
 
           {/* CHÂN TRANG - LƯU Ý PHÁP LÝ */}
@@ -258,10 +274,10 @@ const App: React.FC = () => {
       <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white border-t border-slate-100 h-16 flex items-center justify-around shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
         {[
           { id: 'home', label: 'Trang chủ', icon: Home },
-          { id: 'comparison', label: 'So sánh', icon: Layers },
+          { id: 'comparison', label: 'So sánh thẻ tín dụng', icon: Layers },
           { id: 'loans', label: 'Vay', icon: DollarSign },
           { id: 'cards', label: 'Thẻ', icon: CreditCard },
-          { id: 'profile', label: 'Hồ sơ', icon: User }
+          // Removed Profile from mobile bottom nav
         ].map(tab => (
           <button
             key={tab.id}
@@ -284,8 +300,11 @@ const App: React.FC = () => {
               <button onClick={() => setIsSidebarOpen(false)} className="p-2 bg-slate-100 rounded-full"><X size={20} /></button>
             </div>
             <nav className="space-y-4">
-              <button onClick={() => { setActiveTab('profile'); setIsSidebarOpen(false); }} className="w-full flex items-center gap-4 p-4 bg-blue-50 text-blue-700 rounded-2xl font-bold">
-                <User size={20} /> Quản trị hệ thống
+              <button onClick={() => { setActiveTab('guides'); setIsSidebarOpen(false); }} className="w-full flex items-center gap-4 p-4 bg-blue-50 text-blue-700 rounded-2xl font-bold">
+                <div className="w-6 h-6 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full flex items-center justify-center shadow-sm">
+                  <span className="font-bold text-sm">?</span>
+                </div>
+                Hướng dẫn đăng ký
               </button>
               <div className="p-5 bg-slate-50 rounded-[2rem] border border-slate-100">
                 <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-4 text-center">Liên hệ hỗ trợ</p>
