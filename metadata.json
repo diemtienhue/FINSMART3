@@ -1,0 +1,8 @@
+{
+  "name": "Finsmart - Affiliate Fintech Conversion Engine",
+  "description": "A high-conversion financial affiliate platform for comparing loans and credit cards, featuring AI financial consultation and a robust admin dashboard.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
