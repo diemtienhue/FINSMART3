@@ -16,12 +16,23 @@ const App: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const [appConfig, setAppConfig] = useState({
+    heroTitle: 'Tài Chính Thông Minh',
+    heroSubtitle: 'Giải pháp so sánh và lựa chọn sản phẩm tài chính tối ưu nhất dành cho bạn.',
+    heroImage: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200',
+    zaloSupport: SUPPORT_ZALO
+  });
+
   useEffect(() => {
     const fetchProjects = async () => {
       try {
         const { projectService } = await import('./services/projectService');
-        const data = await projectService.getAll();
+        const [data, settings] = await Promise.all([
+          projectService.getAll(),
+          projectService.getSettings()
+        ]);
         setProjects(data);
+        setAppConfig(settings);
       } catch (error) {
         console.error('Failed to fetch projects:', error);
       } finally {
@@ -38,22 +49,22 @@ const App: React.FC = () => {
   }).sort((a, b) => a.order - b.order);
 
   const handlePhoneCall = () => {
-    window.location.href = `tel:${SUPPORT_ZALO.replace(/\./g, '')}`;
+    window.location.href = `tel:${appConfig.zaloSupport.replace(/\./g, '')}`;
   };
 
   const handleZaloChat = () => {
-    window.open(`https://zalo.me/${SUPPORT_ZALO.replace(/\./g, '')}`, '_blank');
+    window.open(`https://zalo.me/${appConfig.zaloSupport.replace(/\./g, '')}`, '_blank');
   };
 
   const HomeSection = () => (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Hero Banner */}
       <div className="relative h-48 sm:h-64 rounded-3xl overflow-hidden shadow-xl">
-        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200" className="w-full h-full object-cover" alt="hero" />
+        <img src={appConfig.heroImage} className="w-full h-full object-cover" alt="hero" />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-transparent flex items-center p-6 sm:p-10">
           <div className="max-w-md">
-            <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">Tài Chính Thông Minh</h1>
-            <p className="text-blue-100 text-sm sm:text-lg mb-6 opacity-90">Giải pháp so sánh và lựa chọn sản phẩm tài chính tối ưu nhất dành cho bạn.</p>
+            <h1 className="text-2xl sm:text-4xl font-bold text-white mb-2">{appConfig.heroTitle}</h1>
+            <p className="text-blue-100 text-sm sm:text-lg mb-6 opacity-90">{appConfig.heroSubtitle}</p>
             <button
               onClick={() => setActiveTab('loans')}
               className="px-6 py-3 bg-white text-blue-700 rounded-xl font-bold shadow-lg hover:bg-blue-50 transition-all flex items-center gap-2 text-sm uppercase"

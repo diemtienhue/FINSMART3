@@ -85,8 +85,12 @@ const AdminDashboard: React.FC = () => {
     const loadData = async () => {
       try {
         const { projectService } = await import('../services/projectService');
-        const data = await projectService.getAll();
+        const [data, settings] = await Promise.all([
+          projectService.getAll(),
+          projectService.getSettings()
+        ]);
         setProjects(data);
+        setAppSettings(settings);
       } catch (e) {
         console.error(e);
       }
@@ -112,18 +116,13 @@ const AdminDashboard: React.FC = () => {
     try {
       const { projectService } = await import('../services/projectService');
 
-      // Save all projects that have changes (or all for simplicity, though optimizing is better)
-      // For this demo, let's save the current list one by one or create a bulk upsert if backend supports it.
-      // Our service has upsert(single).
+      // Save settings
+      await projectService.saveSettings(appSettings);
 
-      // Better strategy: We only upsert the 'editingProject' when 'Save' is clicked in the modal.
-      // But the "Sync" button here suggests a global sync.
-      // If we want detailed sync, we should probably fetch freshly on load.
-
-      // For now, let's just re-fetch to ensure we see latest data:
+      // Re-fetch data
       const data = await projectService.getAll();
       setProjects(data);
-      alert('Đã đồng bộ dữ liệu mới nhất từ Supabase!');
+      alert('Đã đồng bộ dữ liệu (Bao gồm Cài đặt & Hero Slide) thành công!');
     } catch (e) {
       console.error(e);
       alert('Lỗi đồng bộ: ' + (e as any).message);
