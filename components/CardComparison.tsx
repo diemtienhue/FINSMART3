@@ -2,17 +2,20 @@
 import React, { useState } from 'react';
 import { Project, ProjectType } from '../types';
 import { INITIAL_PROJECTS } from '../constants';
-import { 
-  Layers, CheckCircle2, Star, ChevronRight, ArrowRightLeft, X, 
+import {
+  Layers, CheckCircle2, Star, ChevronRight, ArrowRightLeft, X,
   Trophy, Percent, Clock, Gift, Sparkles, BadgeCheck, Shield, ExternalLink, Zap
 } from 'lucide-react';
 
 interface CardComparisonProps {
   onSelectCard: (project: Project) => void;
+  projects?: Project[]; // Make optional to avoid breaking if not passed immediately, but ideally required
 }
 
-const CardComparison: React.FC<CardComparisonProps> = ({ onSelectCard }) => {
-  const allCards = INITIAL_PROJECTS.filter(p => p.type === ProjectType.CREDIT_CARD);
+const CardComparison: React.FC<CardComparisonProps> = ({ onSelectCard, projects = [] }) => {
+  const allCards = projects.length > 0
+    ? projects.filter(p => p.type === ProjectType.CREDIT_CARD)
+    : INITIAL_PROJECTS.filter(p => p.type === ProjectType.CREDIT_CARD);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
 
@@ -82,15 +85,14 @@ const CardComparison: React.FC<CardComparisonProps> = ({ onSelectCard }) => {
               </div>
             )}
           </div>
-          
-          <button 
+
+          <button
             disabled={selectedIds.length < 2}
             onClick={() => setShowModal(true)}
-            className={`px-6 py-2.5 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all ${
-              selectedIds.length < 2 
-              ? 'bg-slate-100 text-slate-400 cursor-not-allowed' 
-              : 'bg-blue-600 text-white shadow-lg shadow-blue-200 active:scale-95'
-            }`}
+            className={`px-6 py-2.5 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all ${selectedIds.length < 2
+                ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                : 'bg-blue-600 text-white shadow-lg shadow-blue-200 active:scale-95'
+              }`}
           >
             So sánh ngay
           </button>
@@ -105,17 +107,15 @@ const CardComparison: React.FC<CardComparisonProps> = ({ onSelectCard }) => {
             <button
               key={card.id}
               onClick={() => toggleCard(card.id)}
-              className={`group relative flex flex-col items-center p-3 rounded-2xl transition-all duration-300 ${
-                isSelected 
-                ? 'bg-blue-50' 
-                : 'hover:bg-white'
-              }`}
+              className={`group relative flex flex-col items-center p-3 rounded-2xl transition-all duration-300 ${isSelected
+                  ? 'bg-blue-50'
+                  : 'hover:bg-white'
+                }`}
             >
-              <div className={`relative w-14 h-14 mb-3 rounded-full flex items-center justify-center transition-all ${
-                isSelected 
-                ? 'bg-white border-2 border-blue-600 shadow-lg scale-110' 
-                : 'bg-white border border-slate-100 group-hover:border-blue-200'
-              }`}>
+              <div className={`relative w-14 h-14 mb-3 rounded-full flex items-center justify-center transition-all ${isSelected
+                  ? 'bg-white border-2 border-blue-600 shadow-lg scale-110'
+                  : 'bg-white border border-slate-100 group-hover:border-blue-200'
+                }`}>
                 <img src={card.logo} alt={card.name} className="w-9 h-9 object-contain" />
                 {isSelected && (
                   <div className="absolute -top-1 -right-1 bg-blue-600 text-white rounded-full p-1 shadow-lg border border-white">
@@ -135,7 +135,7 @@ const CardComparison: React.FC<CardComparisonProps> = ({ onSelectCard }) => {
       {showModal && selectedProjects.length === 2 && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/90 backdrop-blur-md animate-in fade-in duration-300">
           <div className="bg-white w-full max-w-xl h-[90vh] sm:h-auto sm:max-h-[95vh] rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col animate-in slide-in-from-bottom duration-500">
-            
+
             {/* Modal Header */}
             <div className="p-6 border-b border-slate-100 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
@@ -144,7 +144,7 @@ const CardComparison: React.FC<CardComparisonProps> = ({ onSelectCard }) => {
                 </div>
                 <h3 className="text-lg font-black text-slate-800 uppercase tracking-tighter">Bảng so sánh chi tiết</h3>
               </div>
-              <button 
+              <button
                 onClick={() => setShowModal(false)}
                 className="p-2 bg-slate-50 hover:bg-slate-100 rounded-full text-slate-400 transition-colors"
               >
@@ -181,33 +181,33 @@ const CardComparison: React.FC<CardComparisonProps> = ({ onSelectCard }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  <ComparisonRow 
-                    icon={Clock} 
-                    label="⏱ Miễn lãi" 
+                  <ComparisonRow
+                    icon={Clock}
+                    label="⏱ Miễn lãi"
                     val1={selectedProjects[0].interestFreePeriod || 'Đang cập nhật'}
                     val2={selectedProjects[1].interestFreePeriod || 'Đang cập nhật'}
                   />
-                  <ComparisonRow 
-                    icon={Percent} 
-                    label="📉 Lãi suất" 
+                  <ComparisonRow
+                    icon={Percent}
+                    label="📉 Lãi suất"
                     val1={selectedProjects[0].interestRate}
                     val2={selectedProjects[1].interestRate}
                   />
-                  <ComparisonRow 
-                    icon={Gift} 
-                    label="💳 Phí TN" 
+                  <ComparisonRow
+                    icon={Gift}
+                    label="💳 Phí TN"
                     val1={selectedProjects[0].advantages.find(a => a.toLowerCase().includes('phí')) || 'Miễn phí năm đầu'}
                     val2={selectedProjects[1].advantages.find(a => a.toLowerCase().includes('phí')) || 'Theo biểu phí'}
                   />
-                  <ComparisonRow 
-                    icon={Sparkles} 
-                    label="💰 Hoàn tiền" 
+                  <ComparisonRow
+                    icon={Sparkles}
+                    label="💰 Hoàn tiền"
                     val1={selectedProjects[0].advantages.find(a => a.toLowerCase().includes('hoàn')) || 'Đến 10%'}
                     val2={selectedProjects[1].advantages.find(a => a.toLowerCase().includes('hoàn')) || 'Đến 5%'}
                   />
-                  <ComparisonRow 
-                    icon={Trophy} 
-                    label="🎁 Ưu đãi chính" 
+                  <ComparisonRow
+                    icon={Trophy}
+                    label="🎁 Ưu đãi chính"
                     val1={
                       <ul className="space-y-1">
                         {selectedProjects[0].advantages.slice(0, 2).map((a, i) => (
@@ -223,9 +223,9 @@ const CardComparison: React.FC<CardComparisonProps> = ({ onSelectCard }) => {
                       </ul>
                     }
                   />
-                  <ComparisonRow 
-                    icon={BadgeCheck} 
-                    label="⭐ Finsmart" 
+                  <ComparisonRow
+                    icon={BadgeCheck}
+                    label="⭐ Finsmart"
                     isLast
                     val1={
                       <div className="flex flex-col">
@@ -246,43 +246,43 @@ const CardComparison: React.FC<CardComparisonProps> = ({ onSelectCard }) => {
 
             {/* Modal Footer CTA */}
             <div className="p-6 bg-slate-50 border-t border-slate-100 shrink-0">
-               <div className="grid grid-cols-2 gap-4">
-                 <a 
-                   href={selectedProjects[0].affiliateLink}
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   className="group relative flex flex-col items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-lg shadow-blue-200 hover:shadow-2xl hover:shadow-blue-300 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
-                 >
-                   <div className="absolute top-0 right-0 w-12 h-12 bg-white/10 rounded-full -mr-6 -mt-6 group-hover:scale-150 transition-transform duration-500" />
-                   <div className="relative z-10 flex flex-col items-center gap-2">
-                     <div className="flex items-center gap-1.5">
-                       <Zap size={12} className="text-blue-200" />
-                       <span className="text-[10px] font-black uppercase tracking-tighter">Khám phá {selectedProjects[0].name.split(' ')[0]}</span>
-                     </div>
-                   </div>
-                   <div className="absolute bottom-1 right-2 opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
-                     <ExternalLink size={14} />
-                   </div>
-                 </a>
+              <div className="grid grid-cols-2 gap-4">
+                <a
+                  href={selectedProjects[0].affiliateLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative flex flex-col items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 text-white shadow-lg shadow-blue-200 hover:shadow-2xl hover:shadow-blue-300 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 w-12 h-12 bg-white/10 rounded-full -mr-6 -mt-6 group-hover:scale-150 transition-transform duration-500" />
+                  <div className="relative z-10 flex flex-col items-center gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <Zap size={12} className="text-blue-200" />
+                      <span className="text-[10px] font-black uppercase tracking-tighter">Khám phá {selectedProjects[0].name.split(' ')[0]}</span>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-1 right-2 opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+                    <ExternalLink size={14} />
+                  </div>
+                </a>
 
-                 <a 
-                   href={selectedProjects[1].affiliateLink}
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   className="group relative flex flex-col items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-indigo-600 to-indigo-800 text-white shadow-lg shadow-indigo-200 hover:shadow-2xl hover:shadow-indigo-300 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
-                 >
-                   <div className="absolute top-0 right-0 w-12 h-12 bg-white/10 rounded-full -mr-6 -mt-6 group-hover:scale-150 transition-transform duration-500" />
-                   <div className="relative z-10 flex flex-col items-center gap-2">
-                     <div className="flex items-center gap-1.5">
-                       <Zap size={12} className="text-indigo-200" />
-                       <span className="text-[10px] font-black uppercase tracking-tighter">Khám phá {selectedProjects[1].name.split(' ')[0]}</span>
-                     </div>
-                   </div>
-                   <div className="absolute bottom-1 right-2 opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
-                     <ExternalLink size={14} />
-                   </div>
-                 </a>
-               </div>
+                <a
+                  href={selectedProjects[1].affiliateLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative flex flex-col items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-indigo-600 to-indigo-800 text-white shadow-lg shadow-indigo-200 hover:shadow-2xl hover:shadow-indigo-300 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 w-12 h-12 bg-white/10 rounded-full -mr-6 -mt-6 group-hover:scale-150 transition-transform duration-500" />
+                  <div className="relative z-10 flex flex-col items-center gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <Zap size={12} className="text-indigo-200" />
+                      <span className="text-[10px] font-black uppercase tracking-tighter">Khám phá {selectedProjects[1].name.split(' ')[0]}</span>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-1 right-2 opacity-30 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+                    <ExternalLink size={14} />
+                  </div>
+                </a>
+              </div>
             </div>
           </div>
         </div>

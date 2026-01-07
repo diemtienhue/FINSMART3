@@ -224,7 +224,7 @@ const App: React.FC = () => {
 
             {activeTab === 'calc' && <LoanCalculator onNavigate={setActiveTab} />}
 
-            {activeTab === 'comparison' && <CardComparison onSelectCard={setSelectedProject} />}
+            {activeTab === 'comparison' && <CardComparison onSelectCard={setSelectedProject} projects={projects} />}
 
             {activeTab === 'profile' && <AdminDashboard />}
           </div>
