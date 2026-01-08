@@ -77,7 +77,8 @@ const AdminDashboard: React.FC = () => {
     heroTitle: 'Tài Chính Thông Minh',
     heroSubtitle: 'Giải pháp so sánh và lựa chọn sản phẩm tài chính tối ưu nhất dành cho bạn.',
     heroImage: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200',
-    zaloSupport: SUPPORT_ZALO
+    zaloSupport: SUPPORT_ZALO,
+    adminPassword: '123456'
   });
 
   useEffect(() => {
@@ -104,7 +105,10 @@ const AdminDashboard: React.FC = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (username === ADMIN_CREDENTIALS.user && password === ADMIN_CREDENTIALS.pass) {
+    // Check against either default credentials OR the loaded settings password
+    const validPassword = appSettings.adminPassword || ADMIN_CREDENTIALS.pass;
+
+    if (username === ADMIN_CREDENTIALS.user && password === validPassword) {
       setIsAuthenticated(true);
     } else {
       alert('Thông tin quản trị không chính xác!');
@@ -404,7 +408,22 @@ const AdminDashboard: React.FC = () => {
 
             <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm space-y-6">
               <p className="text-xs font-black text-red-600 uppercase tracking-widest border-l-4 border-red-600 pl-3">Bảo mật & Database</p>
-              <div className="grid grid-cols-2 gap-4">
+
+              <div className="space-y-4 pt-2">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black text-slate-400 uppercase flex items-center gap-2"><ShieldCheck size={12} /> Đổi mật khẩu Admin</label>
+                  <input
+                    type="text"
+                    className="w-full p-4 bg-red-50 border border-red-100 rounded-2xl font-black text-slate-900 focus:bg-white transition-all"
+                    value={appSettings.adminPassword || ''}
+                    onChange={(e) => setAppSettings({ ...appSettings, adminPassword: e.target.value })}
+                    placeholder="Nhập mật khẩu mới..."
+                  />
+                  <p className="text-[9px] text-red-400 font-bold italic">* Lưu ý: Nhấn "Đồng bộ Supabase" ở trên để lưu mật khẩu mới.</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-50">
                 <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 text-center space-y-2">
                   <Database className="mx-auto text-slate-400" size={24} />
                   <p className="text-[10px] font-black uppercase text-slate-600">Dung lượng DB</p>

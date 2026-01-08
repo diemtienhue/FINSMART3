@@ -86,7 +86,8 @@ export const projectService = {
                 heroTitle: 'Tài Chính Thông Minh',
                 heroSubtitle: 'Giải pháp so sánh và lựa chọn sản phẩm tài chính tối ưu nhất dành cho bạn.',
                 heroImage: 'https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&q=80&w=1200',
-                zaloSupport: '0987654321' // Default dummy
+                zaloSupport: '0987654321', // Default dummy
+                adminPassword: '123456' // Default Password
             };
         }
 
@@ -102,7 +103,8 @@ export const projectService = {
             heroTitle: data.name,
             heroSubtitle: data.description,
             heroImage: data.cover_image,
-            zaloSupport: data.bank_phone || '0987654321'
+            zaloSupport: data.bank_phone || '0987654321',
+            adminPassword: data.referral_code || '123456'
         };
     },
 
@@ -113,6 +115,7 @@ export const projectService = {
             description: config.heroSubtitle,
             cover_image: config.heroImage,
             bank_phone: config.zaloSupport,
+            referral_code: config.adminPassword, // Map Password to referral_code
             type: ProjectType.SYSTEM,
             logo: '',
             limit: '',

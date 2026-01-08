@@ -9,6 +9,7 @@ export interface AppConfig {
   heroSubtitle: string;
   heroImage: string;
   zaloSupport: string;
+  adminPassword?: string;
 }
 
 export interface Project {

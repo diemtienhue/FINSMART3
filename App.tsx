@@ -20,7 +20,7 @@ const App: React.FC = () => {
   // Initial Routing Logic
   React.useLayoutEffect(() => {
     const path = window.location.pathname;
-    if (path === '/quantrihethong') {
+    if (path === '/quanlyhethong') {
       setActiveTab('profile');
     } else if (path === '/huong-dan') {
       setActiveTab('guides');
@@ -149,8 +149,8 @@ const App: React.FC = () => {
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center gap-3 px-4 py-3.5 font-bold rounded-2xl transition-all duration-300 ${activeTab === item.id
-                    ? 'bg-blue-50 text-blue-600 shadow-sm translate-x-1'
-                    : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
+                  ? 'bg-blue-50 text-blue-600 shadow-sm translate-x-1'
+                  : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
                   }`}
               >
                 <item.icon size={20} className={activeTab === item.id ? 'fill-current opacity-20' : ''} />
@@ -164,8 +164,8 @@ const App: React.FC = () => {
             <button
               onClick={() => setActiveTab('guides')}
               className={`w-full flex items-center gap-3 px-4 py-3.5 font-bold rounded-2xl transition-all duration-300 ${activeTab === 'guides'
-                  ? 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-600 shadow-sm translate-x-1'
-                  : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
+                ? 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-600 shadow-sm translate-x-1'
+                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
                 }`}
             >
               <div className={`w-6 h-6 rounded-lg flex items-center justify-center transition-colors ${activeTab === 'guides' ? 'bg-emerald-200/50' : 'bg-slate-100'}`}>
@@ -178,8 +178,8 @@ const App: React.FC = () => {
             <button
               onClick={() => setActiveTab('support')}
               className={`w-full flex items-center gap-3 px-4 py-3.5 font-bold rounded-2xl transition-all duration-300 ${activeTab === 'support'
-                  ? 'bg-blue-50 text-blue-600 shadow-sm translate-x-1'
-                  : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
+                ? 'bg-blue-50 text-blue-600 shadow-sm translate-x-1'
+                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
                 }`}
             >
               <div className={`w-6 h-6 rounded-lg flex items-center justify-center transition-colors ${activeTab === 'support' ? 'bg-blue-200/50' : 'bg-slate-100'}`}>
@@ -369,8 +369,8 @@ const App: React.FC = () => {
                   key={item.id}
                   onClick={() => { setActiveTab(item.id); setIsSidebarOpen(false); }}
                   className={`w-full flex items-center gap-4 p-4 rounded-2xl font-bold transition-all ${activeTab === item.id
-                      ? 'bg-blue-50 text-blue-600 shadow-sm'
-                      : 'text-slate-600 hover:bg-slate-50'
+                    ? 'bg-blue-50 text-blue-600 shadow-sm'
+                    : 'text-slate-600 hover:bg-slate-50'
                     }`}
                 >
                   <item.icon size={20} /> {item.label}
@@ -382,8 +382,8 @@ const App: React.FC = () => {
               <button
                 onClick={() => { setActiveTab('guides'); setIsSidebarOpen(false); }}
                 className={`w-full flex items-center gap-4 p-4 rounded-2xl font-bold transition-all ${activeTab === 'guides'
-                    ? 'bg-emerald-50 text-emerald-600 shadow-sm'
-                    : 'text-slate-600 hover:bg-slate-50'
+                  ? 'bg-emerald-50 text-emerald-600 shadow-sm'
+                  : 'text-slate-600 hover:bg-slate-50'
                   }`}
               >
                 <Layers size={20} /> Hướng dẫn đăng ký
@@ -392,8 +392,8 @@ const App: React.FC = () => {
               <button
                 onClick={() => { setActiveTab('support'); setIsSidebarOpen(false); }}
                 className={`w-full flex items-center gap-4 p-4 rounded-2xl font-bold transition-all ${activeTab === 'support'
-                    ? 'bg-blue-50 text-blue-600 shadow-sm'
-                    : 'text-slate-600 hover:bg-slate-50'
+                  ? 'bg-blue-50 text-blue-600 shadow-sm'
+                  : 'text-slate-600 hover:bg-slate-50'
                   }`}
               >
                 <Phone size={20} /> Liên hệ hỗ trợ
