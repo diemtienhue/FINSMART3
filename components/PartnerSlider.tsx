@@ -1,8 +1,27 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { INITIAL_PROJECTS } from '../constants';
+import { partnerService } from '../services/partnerService';
+import { PartnerLogo } from '../types';
 
 const PartnerSlider: React.FC = () => {
+  const [partnerLogos, setPartnerLogos] = useState<PartnerLogo[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPartnerLogos = async () => {
+      try {
+        const logos = await partnerService.getAll();
+        setPartnerLogos(logos);
+      } catch (error) {
+        console.error('Failed to fetch partner logos:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPartnerLogos();
+  }, []);
+
   // Get logos from existing projects
   const existingLogos = INITIAL_PROJECTS.map(p => ({
     id: p.id,
@@ -10,20 +29,18 @@ const PartnerSlider: React.FC = () => {
     name: p.name
   }));
 
-  // Add new partners
-  const newPartners = [
-    { id: 'partner-mfast', logo: '/partners/partner-1.png', name: 'Mfast' },
-    { id: 'partner-cnext', logo: '/partners/partner-2.png', name: 'Cnext' },
-    { id: 'partner-finconnect', logo: '/partners/partner-3.jpg', name: 'Finconnect' },
+  // Combine project logos + partner logos from Supabase
+  const allPartners = [
+    ...existingLogos,
+    ...partnerLogos.map(p => ({ id: p.id, logo: p.logoUrl, name: '' }))
   ];
 
-  const allPartners = [...existingLogos, ...newPartners];
+  if (loading || allPartners.length === 0) {
+    return null; // Or return a loading skeleton
+  }
 
   return (
-    <div className="w-full bg-white border-t border-slate-100 py-8 overflow-hidden">
-        <div className="max-w-6xl mx-auto px-4 mb-4">
-            <p className="text-center text-sm font-bold text-slate-400 uppercase tracking-widest">Đối tá liên kết</p>
-        </div>
+    <div className="w-full bg-white py-8 overflow-hidden">
       <div className="relative w-full">
         {/* Gradients for smooth fade effect at edges */}
         <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
@@ -39,14 +56,14 @@ const PartnerSlider: React.FC = () => {
             >
               <img
                 src={partner.logo}
-                alt={partner.name}
+                alt=""
                 className="max-w-full max-h-full object-contain"
               />
             </div>
           ))}
         </div>
       </div>
-      
+
       <style>{`
         @keyframes scroll {
           0% { transform: translateX(0); }

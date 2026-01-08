@@ -81,17 +81,24 @@ const AdminDashboard: React.FC = () => {
     adminPassword: '123456'
   });
 
+  // Partner Logos State
+  const [partnerLogos, setPartnerLogos] = useState<any[]>([]);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+
   useEffect(() => {
     // Initial fetch for Admin
     const loadData = async () => {
       try {
         const { projectService } = await import('../services/projectService');
-        const [data, settings] = await Promise.all([
+        const { partnerService } = await import('../services/partnerService');
+        const [data, settings, logos] = await Promise.all([
           projectService.getAll(),
-          projectService.getSettings()
+          projectService.getSettings(),
+          partnerService.getAll()
         ]);
         setProjects(data);
         setAppSettings(settings);
+        setPartnerLogos(logos);
       } catch (e) {
         console.error(e);
       }
@@ -99,7 +106,7 @@ const AdminDashboard: React.FC = () => {
     loadData();
   }, []);
 
-  const [mainNav, setMainNav] = useState<'hero' | 'products' | 'comparison' | 'settings'>('products');
+  const [mainNav, setMainNav] = useState<'hero' | 'products' | 'comparison' | 'partners' | 'settings'>('products');
   const [editorSubTab, setEditorSubTab] = useState<'card' | 'popup'>('card');
   const [isSyncing, setIsSyncing] = useState(false);
 
@@ -213,6 +220,7 @@ const AdminDashboard: React.FC = () => {
             { id: 'hero', label: 'Hero Slider', icon: Layout },
             { id: 'products', label: 'Vay & Thẻ', icon: LayoutGrid },
             { id: 'comparison', label: 'So sánh', icon: Layers },
+            { id: 'partners', label: 'Logo Đối tác', icon: Award },
             { id: 'settings', label: 'Cài đặt', icon: Settings }
           ].map(nav => (
             <button
@@ -384,6 +392,112 @@ const AdminDashboard: React.FC = () => {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </div>
+        )}
+
+        {/* REGION 3.5: PARTNER LOGOS MANAGEMENT */}
+        {mainNav === 'partners' && (
+          <div className="space-y-8 animate-in slide-in-from-left-4">
+            <div className="bg-white p-8 rounded-[2.5rem] border border-slate-100 shadow-sm space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-black text-purple-600 uppercase tracking-widest border-l-4 border-purple-600 pl-3">Quản lý Logo Đối tác</p>
+                  <p className="text-[10px] text-slate-400 font-bold mt-1 ml-4 uppercase">Upload logo các đối tác liên kết hiển thị ở footer</p>
+                </div>
+                <div className="flex items-center gap-2 text-[10px] font-black text-slate-400">
+                  <Award size={14} />
+                  {partnerLogos.length} logo
+                </div>
+              </div>
+
+              {/* Upload Section */}
+              <div className="p-6 bg-purple-50 rounded-3xl border border-purple-100 space-y-4">
+                <p className="text-[10px] font-black text-purple-600 uppercase tracking-widest flex items-center gap-2">
+                  <Upload size={12} /> Tải logo mới lên
+                </p>
+                <div className="flex gap-4">
+                  <input
+                    type="file"
+                    id="partner-logo-upload"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+
+                      setUploadingLogo(true);
+                      try {
+                        const { partnerService } = await import('../services/partnerService');
+                        const logoUrl = await partnerService.uploadLogo(file);
+                        const newLogo = await partnerService.create(
+                          file.name.split('.')[0],
+                          logoUrl,
+                          partnerLogos.length + 1
+                        );
+                        setPartnerLogos([...partnerLogos, newLogo]);
+                        alert('Đã tải logo lên thành công!');
+                      } catch (error) {
+                        alert('Lỗi tải logo: ' + (error as any).message);
+                      } finally {
+                        setUploadingLogo(false);
+                      }
+                    }}
+                  />
+                  <label
+                    htmlFor="partner-logo-upload"
+                    className={`flex-1 flex items-center justify-center gap-2 p-6 bg-white border-2 border-dashed border-purple-300 rounded-2xl cursor-pointer hover:bg-purple-50 transition-all ${uploadingLogo ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    {uploadingLogo ? (
+                      <>
+                        <RefreshCw size={20} className="animate-spin text-purple-600" />
+                        <span className="text-sm font-black text-purple-600 uppercase">Đang tải lên...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload size={20} className="text-purple-600" />
+                        <span className="text-sm font-black text-purple-600 uppercase">Chọn ảnh logo</span>
+                      </>
+                    )}
+                  </label>
+                </div>
+              </div>
+
+              {/* Logos Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                {partnerLogos.map((logo) => (
+                  <div key={logo.id} className="group relative bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-xl transition-all">
+                    <div className="aspect-square bg-slate-50 rounded-xl overflow-hidden flex items-center justify-center mb-3">
+                      <img src={logo.logoUrl} alt={logo.name} className="max-w-full max-h-full object-contain" />
+                    </div>
+                    <p className="text-[9px] font-bold text-slate-600 text-center truncate">{logo.name}</p>
+                    <button
+                      onClick={async () => {
+                        if (!confirm(`Xóa logo "${logo.name}"?`)) return;
+                        try {
+                          const { partnerService } = await import('../services/partnerService');
+                          await partnerService.delete(logo.id);
+                          setPartnerLogos(partnerLogos.filter(l => l.id !== logo.id));
+                          alert('Đã xóa logo!');
+                        } catch (error) {
+                          alert('Lỗi xóa logo: ' + (error as any).message);
+                        }
+                      }}
+                      className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:scale-110"
+                    >
+                      <Trash2 size={12} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              {partnerLogos.length === 0 && (
+                <div className="text-center py-12">
+                  <Award size={48} className="mx-auto text-slate-300 mb-4" />
+                  <p className="text-sm font-bold text-slate-400 uppercase">Chưa có logo đối tác nào</p>
+                  <p className="text-[10px] text-slate-300 mt-1">Tải logo lên để hiển thị ở footer</p>
+                </div>
+              )}
             </div>
           </div>
         )}

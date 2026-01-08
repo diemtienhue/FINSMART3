@@ -7,6 +7,7 @@ import AdminDashboard from './components/AdminDashboard';
 import LoanCalculator from './components/LoanCalculator';
 import CardComparison from './components/CardComparison';
 import GuidePage from './components/GuidePage';
+import PartnerSlider from './components/PartnerSlider';
 import { Project, ProjectType } from './types';
 import { INITIAL_PROJECTS, SUPPORT_ZALO } from './constants';
 
@@ -304,7 +305,10 @@ const App: React.FC = () => {
           {/* CHÂN TRANG - LƯU Ý PHÁP LÝ */}
           <footer className="mt-auto px-4 sm:px-8 py-8 border-t border-slate-100 bg-white/50">
             <div className="max-w-6xl mx-auto">
-              <div className="flex flex-col items-center text-center space-y-4">
+              {/* Partner Slider */}
+              <PartnerSlider />
+
+              <div className="flex flex-col items-center text-center space-y-4 mt-8">
                 <div className="flex items-center gap-2 text-slate-400">
                   <ShieldCheck size={18} />
                   <span className="text-[10px] font-black uppercase tracking-[0.2em]">Cam kết bảo mật & Minh bạch</span>

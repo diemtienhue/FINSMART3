@@ -12,6 +12,13 @@ export interface AppConfig {
   adminPassword?: string;
 }
 
+export interface PartnerLogo {
+  id: string;
+  name: string;
+  logoUrl: string;
+  displayOrder: number;
+}
+
 export interface Project {
   id: string;
   name: string;
