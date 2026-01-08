@@ -242,7 +242,7 @@ const App: React.FC = () => {
 
             {activeTab === 'profile' && <AdminDashboard />}
 
-            {activeTab === 'guides' && <GuidePage projects={projects} />}
+            {activeTab === 'guides' && <GuidePage projects={projects} onOpenDetail={setSelectedProject} />}
           </div>
 
           {/* CHÂN TRANG - LƯU Ý PHÁP LÝ */}

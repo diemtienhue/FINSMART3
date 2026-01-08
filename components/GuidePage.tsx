@@ -1,98 +1,62 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Project } from '../types';
-import { ChevronDown, ChevronUp, BookOpen, CheckCircle2 } from 'lucide-react';
+import { ChevronDown, BookOpen, CheckCircle2 } from 'lucide-react';
 
 interface GuidePageProps {
     projects: Project[];
+    onOpenDetail: (project: Project) => void;
 }
 
-const GuidePage: React.FC<GuidePageProps> = ({ projects }) => {
+const GuidePage: React.FC<GuidePageProps> = ({ projects, onOpenDetail }) => {
     // Filter only Published projects for the guide
     const guideProjects = projects.filter(p => p.status === 'Published').sort((a, b) => a.order - b.order);
-    const [openProjectId, setOpenProjectId] = useState<string | null>(null);
-
-    const toggleProject = (id: string) => {
-        setOpenProjectId(openProjectId === id ? null : id);
-    };
 
     return (
         <div className="max-w-4xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-24">
             <div className="text-center mb-10 px-4">
+                <div className="w-20 h-20 mx-auto bg-gradient-to-tr from-blue-500 to-indigo-600 rounded-[2rem] shadow-xl shadow-blue-200 flex items-center justify-center mb-6 transform rotate-3 hover:rotate-6 transition-all duration-300 group cursor-pointer">
+                    <BookOpen size={40} className="text-white drop-shadow-md group-hover:scale-110 transition-transform" />
+                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg border border-blue-100">
+                        <CheckCircle2 size={16} className="text-emerald-500" />
+                    </div>
+                </div>
                 <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-2 uppercase flex items-center justify-center gap-3">
-                    <BookOpen className="text-blue-600" /> Hướng dẫn đăng ký
+                    Hướng dẫn đăng ký
                 </h2>
                 <p className="text-slate-500 text-sm font-medium">Quy trình chi tiết từng bước để đăng ký hồ sơ thành công 100%</p>
             </div>
 
             <div className="space-y-4 px-4 sm:px-0">
-                {guideProjects.map(project => {
-                    const isOpen = openProjectId === project.id;
-                    return (
-                        <div key={project.id} className={`bg-white rounded-[2rem] border transition-all duration-300 overflow-hidden ${isOpen ? 'border-blue-200 shadow-xl' : 'border-slate-100 shadow-sm hover:shadow-md'}`}>
-                            <button
-                                onClick={() => toggleProject(project.id)}
-                                className="w-full flex items-center justify-between p-6 text-left"
-                            >
-                                <div className="flex items-center gap-4">
-                                    <div className="w-12 h-12 bg-white rounded-full border border-slate-100 p-1 flex items-center justify-center shadow-sm">
-                                        <img src={project.logo} className="w-full h-full object-cover rounded-full" alt="logo" />
-                                    </div>
-                                    <div>
-                                        <h3 className={`text-sm font-black uppercase tracking-tight ${isOpen ? 'text-blue-600' : 'text-slate-700'}`}>Hướng dẫn {project.name}</h3>
-                                        <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{project.steps.length} Bước thực hiện</p>
-                                    </div>
+                {guideProjects.map(project => (
+                    <div key={project.id} className="group bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:border-blue-200 transition-all duration-300 overflow-hidden cursor-pointer relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-50/0 via-blue-50/0 to-blue-50/50 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                        <button
+                            onClick={() => onOpenDetail(project)}
+                            className="w-full flex items-center justify-between p-6 text-left relative z-10"
+                        >
+                            <div className="flex items-center gap-5">
+                                <div className="w-14 h-14 bg-white rounded-2xl border border-slate-100 p-2 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
+                                    <img src={project.logo} className="w-full h-full object-contain" alt="logo" />
                                 </div>
-                                <div className={`p-2 rounded-full transition-colors ${isOpen ? 'bg-blue-50 text-blue-600' : 'bg-slate-50 text-slate-400'}`}>
-                                    {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-                                </div>
-                            </button>
-
-                            {isOpen && (
-                                <div className="px-6 pb-8 pt-2 animate-in slide-in-from-top-2 duration-300">
-                                    <div className="space-y-8 relative">
-                                        {/* Connecting Line */}
-                                        <div className="absolute left-[19px] top-4 bottom-4 w-0.5 bg-slate-100" />
-
-                                        {project.steps.length > 0 ? (
-                                            project.steps.map((step, idx) => (
-                                                <div key={idx} className="relative flex gap-6">
-                                                    <div className="z-10 w-10 h-10 rounded-full bg-white border-4 border-blue-50 text-blue-600 font-black flex items-center justify-center text-xs shrink-0 shadow-sm">
-                                                        {idx + 1}
-                                                    </div>
-                                                    <div className="flex-1 space-y-3">
-                                                        <div>
-                                                            <h4 className="font-bold text-slate-800 text-sm">{step.title}</h4>
-                                                            <p className="text-xs text-slate-500 leading-relaxed">{step.description}</p>
-                                                        </div>
-                                                        {step.image && (
-                                                            <div className="rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
-                                                                <img src={step.image} className="w-full h-auto object-cover" alt={`step-${idx + 1}`} />
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                            ))
-                                        ) : (
-                                            <div className="text-center py-8">
-                                                <p className="text-xs text-slate-400 font-medium italic">Chưa có hướng dẫn chi tiết cho sản phẩm này.</p>
-                                            </div>
-                                        )}
-
-                                        {/* Final Step */}
-                                        <div className="relative flex gap-6">
-                                            <div className="z-10 w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                                                <CheckCircle2 size={20} />
-                                            </div>
-                                            <div className="pt-2">
-                                                <p className="text-xs font-bold text-emerald-600 uppercase tracking-wide">Hoàn tất đăng ký</p>
-                                            </div>
-                                        </div>
+                                <div>
+                                    <h3 className="text-base font-black uppercase tracking-tight text-slate-700 group-hover:text-blue-600 transition-colors">Hướng dẫn {project.name}</h3>
+                                    <div className="flex items-center gap-2 mt-1">
+                                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">
+                                            {project.steps.length} Bước thực hiện
+                                        </span>
+                                        <span className="text-[10px] text-blue-500 font-bold uppercase tracking-wider bg-blue-50 px-2 py-1 rounded-lg border border-blue-100 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                                            Xem chi tiết
+                                        </span>
                                     </div>
                                 </div>
-                            )}
-                        </div>
-                    );
-                })}
+                            </div>
+                            <div className="w-10 h-10 rounded-full bg-slate-50 text-slate-400 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all shadow-sm group-hover:shadow-md transform group-hover:translate-x-1">
+                                <ChevronDown size={20} className="-rotate-90" />
+                            </div>
+                        </button>
+                    </div>
+                ))}
             </div>
         </div>
     );
