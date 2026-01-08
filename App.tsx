@@ -11,7 +11,7 @@ import { Project, ProjectType } from './types';
 import { INITIAL_PROJECTS, SUPPORT_ZALO } from './constants';
 
 const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'home' | 'loans' | 'cards' | 'comparison' | 'calc' | 'profile' | 'guides'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'loans' | 'cards' | 'comparison' | 'calc' | 'profile' | 'guides' | 'insurance' | 'support'>('home');
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -129,9 +129,10 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-slate-50 flex flex-col">
       <div className="flex flex-1">
         {/* Sidebar Desktop */}
+        {/* Sidebar Desktop - Redesigned */}
         <aside className="hidden lg:flex w-72 flex-col fixed inset-y-0 left-0 bg-white border-r border-slate-100 p-6 z-40">
-          <div className="flex items-center gap-3 mb-10">
-            <div className="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center shadow-lg">
+          <div className="flex items-center gap-3 mb-8 px-2">
+            <div className="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
               <Building2 size={24} />
             </div>
             <span className="text-2xl font-black text-slate-800 tracking-tight">FINSMART</span>
@@ -139,50 +140,68 @@ const App: React.FC = () => {
 
           <nav className="flex-1 space-y-2">
             {[
-              { id: 'home', label: 'Trang chủ', icon: Home },
-              { id: 'calc', label: 'Máy tính khoản vay', icon: Calculator },
-              { id: 'comparison', label: 'So sánh thẻ tín dụng', icon: Layers },
+              { id: 'home' as const, label: 'Trang chủ', icon: Home },
+              { id: 'cards' as const, label: 'Thẻ tín dụng', icon: CreditCard },
+              { id: 'loans' as const, label: 'Vay tiêu dùng', icon: DollarSign },
+              { id: 'insurance' as const, label: 'Bảo hiểm ô tô giá rẻ', icon: ShieldCheck },
             ].map(item => (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id as any)}
-                className={`w-full flex items-center gap-3 px-4 py-3 font-medium rounded-xl transition-colors ${activeTab === item.id ? 'bg-blue-50 text-blue-600' : 'text-slate-600 hover:bg-slate-50'}`}
+                onClick={() => setActiveTab(item.id)}
+                className={`w-full flex items-center gap-3 px-4 py-3.5 font-bold rounded-2xl transition-all duration-300 ${activeTab === item.id
+                    ? 'bg-blue-50 text-blue-600 shadow-sm translate-x-1'
+                    : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
+                  }`}
               >
-                <item.icon size={18} /> {item.label}
+                <item.icon size={20} className={activeTab === item.id ? 'fill-current opacity-20' : ''} />
+                <span className="text-sm tracking-tight">{item.label}</span>
               </button>
             ))}
-            <div className="pt-4 mt-4 border-t border-slate-50">
-              <button
-                onClick={() => setActiveTab('guides' as any)}
-                className={`w-full flex items-center gap-3 px-4 py-3 font-medium rounded-xl transition-colors ${activeTab === 'guides' ? 'bg-blue-50 text-blue-600' : 'text-slate-600 hover:bg-slate-50'}`}
-              >
-                <div className="w-5 h-5 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full flex items-center justify-center shadow-sm">
-                  <span className="font-bold text-[10px]">?</span>
-                </div>
-                Hướng dẫn đăng ký
-              </button>
-            </div>
+
+            <div className="my-4 border-t border-slate-50" />
+
+            {/* Hướng dẫn đăng ký - New Icon */}
+            <button
+              onClick={() => setActiveTab('guides')}
+              className={`w-full flex items-center gap-3 px-4 py-3.5 font-bold rounded-2xl transition-all duration-300 ${activeTab === 'guides'
+                  ? 'bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-600 shadow-sm translate-x-1'
+                  : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
+                }`}
+            >
+              <div className={`w-6 h-6 rounded-lg flex items-center justify-center transition-colors ${activeTab === 'guides' ? 'bg-emerald-200/50' : 'bg-slate-100'}`}>
+                <Layers size={16} className={activeTab === 'guides' ? 'text-emerald-700' : 'text-slate-500'} />
+              </div>
+              <span className="text-sm tracking-tight">Hướng dẫn đăng ký</span>
+            </button>
+
+            {/* Liên hệ hỗ trợ */}
+            <button
+              onClick={() => setActiveTab('support')}
+              className={`w-full flex items-center gap-3 px-4 py-3.5 font-bold rounded-2xl transition-all duration-300 ${activeTab === 'support'
+                  ? 'bg-blue-50 text-blue-600 shadow-sm translate-x-1'
+                  : 'text-slate-500 hover:bg-slate-50 hover:text-slate-700'
+                }`}
+            >
+              <div className={`w-6 h-6 rounded-lg flex items-center justify-center transition-colors ${activeTab === 'support' ? 'bg-blue-200/50' : 'bg-slate-100'}`}>
+                <Phone size={16} className={activeTab === 'support' ? 'text-blue-700' : 'text-slate-500'} />
+              </div>
+              <span className="text-sm tracking-tight">Liên hệ hỗ trợ</span>
+            </button>
           </nav>
 
-          {/* Contact Hub - Updated Hidden Links Design */}
-          <div className="mt-auto p-5 bg-slate-50 rounded-[2.5rem] border border-slate-200/50 shadow-inner">
-            <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-4 text-center">Hỗ trợ trực tuyến</p>
-            <div className="flex items-center justify-center gap-4">
-              <button
-                onClick={handlePhoneCall}
-                className="w-12 h-12 bg-white text-slate-600 rounded-full flex items-center justify-center shadow-lg border border-slate-100 hover:bg-blue-600 hover:text-white transition-all transform hover:scale-110 active:scale-95 group"
-                title="Hỗ trợ hotline"
-              >
-                <Phone size={18} />
-              </button>
-              <button
-                onClick={handleZaloChat}
-                className="w-12 h-12 bg-gradient-to-br from-[#0068ff] to-[#0052cc] text-white rounded-full flex items-center justify-center shadow-xl shadow-blue-200 hover:scale-110 active:scale-95 transition-all group overflow-hidden relative"
-                title="Hỗ trợ Zalo"
-              >
-                <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <MessageCircle size={22} fill="white" className="relative z-10" />
-              </button>
+          {/* Contact Banner Mini */}
+          <div className="mt-auto p-4 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl shadow-xl shadow-blue-200 text-center relative overflow-hidden group cursor-pointer" onClick={handleZaloChat}>
+            <div className="absolute top-0 right-0 w-20 h-20 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10" />
+            <div className="absolute bottom-0 left-0 w-20 h-20 bg-black/10 rounded-full blur-2xl -ml-10 -mb-10" />
+
+            <div className="relative z-10 space-y-3">
+              <div className="w-10 h-10 mx-auto bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/10">
+                <MessageCircle size={20} className="text-white" />
+              </div>
+              <div>
+                <p className="text-white font-black text-xs uppercase tracking-widest mb-1">Cần hỗ trợ?</p>
+                <p className="text-blue-100 text-[10px] font-medium opacity-90">Chat ngay với chuyên viên</p>
+              </div>
             </div>
           </div>
         </aside>
@@ -243,6 +262,43 @@ const App: React.FC = () => {
             {activeTab === 'profile' && <AdminDashboard />}
 
             {activeTab === 'guides' && <GuidePage projects={projects} onOpenDetail={setSelectedProject} />}
+
+            {activeTab === 'insurance' && (
+              <div className="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-6 animate-in fade-in zoom-in duration-500">
+                <div className="w-24 h-24 bg-blue-100/50 rounded-full flex items-center justify-center mb-4">
+                  <ShieldCheck size={48} className="text-blue-600" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">Bảo hiểm ô tô giá rẻ</h2>
+                  <p className="text-slate-500 mt-2 max-w-md mx-auto">Hệ thống đang cập nhật danh sách các gói bảo hiểm ưu đãi nhất. Vui lòng quay lại sau.</p>
+                </div>
+                <button onClick={() => setActiveTab('home')} className="px-6 py-3 bg-slate-800 text-white rounded-xl font-bold hover:bg-black transition-all shadow-lg">
+                  Quay về trang chủ
+                </button>
+              </div>
+            )}
+
+            {activeTab === 'support' && (
+              <div className="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-8 animate-in fade-in slide-in-from-bottom duration-500">
+                <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight border-b-4 border-blue-500 pb-2">Liên hệ hỗ trợ</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-2xl px-4">
+                  <div onClick={handlePhoneCall} className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl hover:shadow-2xl transition-all cursor-pointer group">
+                    <div className="w-16 h-16 mx-auto bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <Phone size={32} />
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-800 mb-2">Gọi Hotline</h3>
+                    <p className="text-slate-500 text-sm">Tư vấn trực tiếp 24/7</p>
+                  </div>
+                  <div onClick={handleZaloChat} className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl hover:shadow-2xl transition-all cursor-pointer group">
+                    <div className="w-16 h-16 mx-auto bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                      <MessageCircle size={32} />
+                    </div>
+                    <h3 className="text-lg font-bold text-slate-800 mb-2">Chat Zalo</h3>
+                    <p className="text-slate-500 text-sm">Hỗ trợ nhanh chóng qua box chat</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* CHÂN TRANG - LƯU Ý PHÁP LÝ */}
@@ -290,30 +346,67 @@ const App: React.FC = () => {
         ))}
       </nav>
 
-      {/* Mobile Sidebar */}
+      {/* Mobile Sidebar - Redesigned */}
       {isSidebarOpen && (
         <div className="fixed inset-0 z-[100] lg:hidden animate-in fade-in duration-300">
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsSidebarOpen(false)} />
-          <aside className="absolute top-0 right-0 bottom-0 w-3/4 bg-white shadow-2xl animate-in slide-in-from-right duration-500 flex flex-col p-6">
-            <div className="flex justify-between items-center mb-8">
-              <span className="text-xl font-bold">Menu Hệ Thống</span>
-              <button onClick={() => setIsSidebarOpen(false)} className="p-2 bg-slate-100 rounded-full"><X size={20} /></button>
+          <aside className="absolute top-0 right-0 bottom-0 w-[85%] max-w-sm bg-white shadow-2xl animate-in slide-in-from-right duration-500 flex flex-col p-6 rounded-l-[2rem]">
+            <div className="flex justify-between items-center mb-8 pl-2">
+              <span className="text-xl font-black text-slate-800 tracking-tight flex items-center gap-2">
+                <Building2 size={24} className="text-blue-600" /> MENU
+              </span>
+              <button onClick={() => setIsSidebarOpen(false)} className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors"><X size={20} /></button>
             </div>
-            <nav className="space-y-4">
-              <button onClick={() => { setActiveTab('guides'); setIsSidebarOpen(false); }} className="w-full flex items-center gap-4 p-4 bg-blue-50 text-blue-700 rounded-2xl font-bold">
-                <div className="w-6 h-6 bg-gradient-to-br from-emerald-500 to-emerald-600 text-white rounded-full flex items-center justify-center shadow-sm">
-                  <span className="font-bold text-sm">?</span>
-                </div>
-                Hướng dẫn đăng ký
+
+            <nav className="flex-1 space-y-2 overflow-y-auto pr-2">
+              {[
+                { id: 'home' as const, label: 'Trang chủ', icon: Home },
+                { id: 'cards' as const, label: 'Thẻ tín dụng', icon: CreditCard },
+                { id: 'loans' as const, label: 'Vay tiêu dùng', icon: DollarSign },
+                { id: 'insurance' as const, label: 'Bảo hiểm ô tô giá rẻ', icon: ShieldCheck },
+              ].map(item => (
+                <button
+                  key={item.id}
+                  onClick={() => { setActiveTab(item.id); setIsSidebarOpen(false); }}
+                  className={`w-full flex items-center gap-4 p-4 rounded-2xl font-bold transition-all ${activeTab === item.id
+                      ? 'bg-blue-50 text-blue-600 shadow-sm'
+                      : 'text-slate-600 hover:bg-slate-50'
+                    }`}
+                >
+                  <item.icon size={20} /> {item.label}
+                </button>
+              ))}
+
+              <div className="my-4 border-t border-slate-50" />
+
+              <button
+                onClick={() => { setActiveTab('guides'); setIsSidebarOpen(false); }}
+                className={`w-full flex items-center gap-4 p-4 rounded-2xl font-bold transition-all ${activeTab === 'guides'
+                    ? 'bg-emerald-50 text-emerald-600 shadow-sm'
+                    : 'text-slate-600 hover:bg-slate-50'
+                  }`}
+              >
+                <Layers size={20} /> Hướng dẫn đăng ký
               </button>
-              <div className="p-5 bg-slate-50 rounded-[2rem] border border-slate-100">
-                <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-4 text-center">Liên hệ hỗ trợ</p>
-                <div className="flex items-center justify-center gap-6">
-                  <button onClick={handlePhoneCall} className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg"><Phone size={20} /></button>
-                  <button onClick={handleZaloChat} className="w-12 h-12 bg-gradient-to-br from-[#0068ff] to-[#0052cc] text-white rounded-full flex items-center justify-center shadow-lg"><MessageCircle size={20} /></button>
-                </div>
-              </div>
+
+              <button
+                onClick={() => { setActiveTab('support'); setIsSidebarOpen(false); }}
+                className={`w-full flex items-center gap-4 p-4 rounded-2xl font-bold transition-all ${activeTab === 'support'
+                    ? 'bg-blue-50 text-blue-600 shadow-sm'
+                    : 'text-slate-600 hover:bg-slate-50'
+                  }`}
+              >
+                <Phone size={20} /> Liên hệ hỗ trợ
+              </button>
             </nav>
+
+            <div className="mt-4 p-5 bg-gradient-to-br from-slate-50 to-white rounded-[2rem] border border-slate-100 shadow-inner">
+              <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-4 text-center">kênh Hỗ trợ trực tuyến</p>
+              <div className="flex items-center justify-center gap-6">
+                <button onClick={handlePhoneCall} className="w-14 h-14 bg-white text-blue-600 border border-blue-50 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"><Phone size={24} /></button>
+                <button onClick={handleZaloChat} className="w-14 h-14 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg shadow-blue-200 hover:scale-110 transition-transform"><MessageCircle size={24} /></button>
+              </div>
+            </div>
           </aside>
         </div>
       )}

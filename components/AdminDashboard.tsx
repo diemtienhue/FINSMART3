@@ -292,7 +292,7 @@ const AdminDashboard: React.FC = () => {
                 <div key={p.id} className="group bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-6 hover:shadow-xl transition-all border-b-4 border-b-slate-100 hover:border-b-blue-500">
                   <div className="flex justify-between items-start mb-6">
                     <div className="w-14 h-14 bg-white p-1 rounded-full border border-slate-200 flex items-center justify-center overflow-hidden shadow-sm">
-                      <img src={p.logo} className="w-full h-full object-cover" alt="logo" />
+                      <img src={p.logo} className="w-full h-full object-cover rounded-full" alt="logo" />
                     </div>
                     <div className="flex flex-col items-end gap-1">
                       <span className={`px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest ${p.status === 'Published' ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-400'}`}>{p.status}</span>
@@ -339,7 +339,7 @@ const AdminDashboard: React.FC = () => {
                         <div className="flex items-center gap-3">
                           <div className="relative group">
                             <div className="w-10 h-10 rounded-full border border-slate-100 bg-white p-0.5 overflow-hidden shadow-sm flex items-center justify-center">
-                              <img src={p.logo} className="w-full h-full object-cover" />
+                              <img src={p.logo} className="w-full h-full object-cover rounded-full" />
                             </div>
                             <button onClick={() => setEditingProject(p)} className="absolute inset-0 bg-black/40 text-white rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all"><Camera size={14} /></button>
                           </div>
@@ -507,7 +507,7 @@ const AdminDashboard: React.FC = () => {
                     <div className="space-y-4">
                       <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest border-l-4 border-blue-600 pl-3">Hình ảnh Nhận diện</p>
                       <div className="grid grid-cols-2 gap-6">
-                        <ImageUploader label="Logo Đối tác (SVG/PNG)" ratio="aspect-square" value={editingProject.logo} onChange={(v) => setEditingProject({ ...editingProject, logo: v })} />
+                        <ImageUploader label="Logo Đối tác (SVG/PNG)" ratio="aspect-square rounded-full" value={editingProject.logo} onChange={(v) => setEditingProject({ ...editingProject, logo: v })} />
                         <ImageUploader label="Ảnh bìa (Nếu là thẻ tín dụng)" value={editingProject.coverImage} onChange={(v) => setEditingProject({ ...editingProject, coverImage: v })} />
                       </div>
                     </div>

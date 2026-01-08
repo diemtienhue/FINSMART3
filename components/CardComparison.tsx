@@ -70,8 +70,8 @@ const CardComparison: React.FC<CardComparisonProps> = ({ onSelectCard, projects 
           <div className="flex -space-x-3">
             {selectedProjects.length > 0 ? (
               selectedProjects.map(p => (
-                <div key={p.id} className="w-10 h-10 rounded-full bg-white border-2 border-blue-500 p-1.5 shadow-md animate-in zoom-in">
-                  <img src={p.logo} alt="selected" className="w-full h-full object-contain" />
+                <div key={p.id} className="w-10 h-10 rounded-full bg-white border-2 border-blue-500 p-1.5 shadow-md animate-in zoom-in overflow-hidden">
+                  <img src={p.logo} alt="selected" className="w-full h-full object-cover rounded-full" />
                 </div>
               ))
             ) : (
@@ -90,8 +90,8 @@ const CardComparison: React.FC<CardComparisonProps> = ({ onSelectCard, projects 
             disabled={selectedIds.length < 2}
             onClick={() => setShowModal(true)}
             className={`px-6 py-2.5 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all ${selectedIds.length < 2
-                ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
-                : 'bg-blue-600 text-white shadow-lg shadow-blue-200 active:scale-95'
+              ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+              : 'bg-blue-600 text-white shadow-lg shadow-blue-200 active:scale-95'
               }`}
           >
             So sánh ngay
@@ -108,15 +108,15 @@ const CardComparison: React.FC<CardComparisonProps> = ({ onSelectCard, projects 
               key={card.id}
               onClick={() => toggleCard(card.id)}
               className={`group relative flex flex-col items-center p-3 rounded-2xl transition-all duration-300 ${isSelected
-                  ? 'bg-blue-50'
-                  : 'hover:bg-white'
+                ? 'bg-blue-50'
+                : 'hover:bg-white'
                 }`}
             >
               <div className={`relative w-14 h-14 mb-3 rounded-full flex items-center justify-center transition-all ${isSelected
-                  ? 'bg-white border-2 border-blue-600 shadow-lg scale-110'
-                  : 'bg-white border border-slate-100 group-hover:border-blue-200'
+                ? 'bg-white border-2 border-blue-600 shadow-lg scale-110'
+                : 'bg-white border border-slate-100 group-hover:border-blue-200'
                 }`}>
-                <img src={card.logo} alt={card.name} className="w-9 h-9 object-contain" />
+                <img src={card.logo} alt={card.name} className="w-9 h-9 object-cover rounded-full" />
                 {isSelected && (
                   <div className="absolute -top-1 -right-1 bg-blue-600 text-white rounded-full p-1 shadow-lg border border-white">
                     <CheckCircle2 size={10} />

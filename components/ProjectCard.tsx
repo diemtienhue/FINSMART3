@@ -25,7 +25,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenDetail }) => {
         <div className="p-5 pb-2">
           <div className="flex items-center justify-between mb-4">
             <div className="w-14 h-14 bg-white p-1 rounded-full border border-slate-100 flex items-center justify-center overflow-hidden shadow-sm">
-              <img src={project.logo} alt="logo" className="w-full h-full object-cover" />
+              <img src={project.logo} alt="logo" className="w-full h-full object-cover rounded-full" />
             </div>
             <span className="px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black rounded-lg uppercase tracking-wider">
               VAY TIÊU DÙNG

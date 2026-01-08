@@ -36,8 +36,8 @@ const GuidePage: React.FC<GuidePageProps> = ({ projects, onOpenDetail }) => {
                             className="w-full flex items-center justify-between p-6 text-left relative z-10"
                         >
                             <div className="flex items-center gap-5">
-                                <div className="w-14 h-14 bg-white rounded-2xl border border-slate-100 p-2 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform">
-                                    <img src={project.logo} className="w-full h-full object-contain" alt="logo" />
+                                <div className="w-14 h-14 bg-white rounded-full border border-slate-100 p-1 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+                                    <img src={project.logo} className="w-full h-full object-cover rounded-full" alt="logo" />
                                 </div>
                                 <div>
                                     <h3 className="text-base font-black uppercase tracking-tight text-slate-700 group-hover:text-blue-600 transition-colors">Hướng dẫn {project.name}</h3>
