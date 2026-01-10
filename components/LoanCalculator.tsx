@@ -49,7 +49,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onNavigate }) => {
 
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
         {/* Input Side */}
-        <div className="w-full lg:w-1/2 bg-white p-5 sm:p-8 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/50 space-y-6">
+        <div className="w-full lg:w-1/2 bg-white p-4 sm:p-8 rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/50 space-y-6">
           {/* Amount Slider */}
           <div className="space-y-4">
             <div className="flex justify-between items-center">
@@ -107,7 +107,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onNavigate }) => {
         </div>
 
         {/* Results Side */}
-        <div className="w-full lg:w-1/2 bg-blue-600 p-6 sm:p-8 rounded-[2rem] text-white shadow-2xl shadow-blue-200 relative overflow-hidden">
+        <div className="w-full lg:w-1/2 bg-blue-600 p-5 sm:p-8 rounded-[2rem] text-white shadow-2xl shadow-blue-200 relative overflow-hidden">
           {/* Background Decorative Circles */}
           <div className="absolute top-[-20px] right-[-20px] w-40 h-40 bg-white/10 rounded-full blur-2xl" />
           <div className="absolute bottom-[-20px] left-[-20px] w-32 h-32 bg-blue-400/20 rounded-full blur-xl" />

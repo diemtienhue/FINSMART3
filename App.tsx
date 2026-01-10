@@ -127,7 +127,7 @@ const App: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
+    <div className="min-h-screen bg-slate-50 flex flex-col w-full overflow-x-hidden">
       <div className="flex flex-1">
         {/* Sidebar Desktop */}
         {/* Sidebar Desktop - Redesigned */}

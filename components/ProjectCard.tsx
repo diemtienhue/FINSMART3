@@ -94,7 +94,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, onOpenDetail }) => {
         {project.advantages.slice(0, 3).map((adv, idx) => (
           <div key={idx} className="flex items-center gap-2 sm:gap-2.5 text-[10px] sm:text-[11px] text-slate-600 font-medium">
             <CheckCircle2 size={13} className="text-emerald-500 shrink-0 sm:w-[14px] sm:h-[14px]" />
-            <span className="line-clamp-1">{adv}</span>
+            <span className="line-clamp-1 min-w-0">{adv}</span>
           </div>
         ))}
       </div>
