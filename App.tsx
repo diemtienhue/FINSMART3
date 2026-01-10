@@ -303,7 +303,7 @@ const App: React.FC = () => {
           </div>
 
           {/* CHÂN TRANG - LƯU Ý PHÁP LÝ */}
-          <footer className="mt-auto px-4 sm:px-8 py-8 border-t border-slate-100 bg-white/50">
+          <footer className="mt-auto px-4 sm:px-8 py-8 pb-24 lg:pb-8 border-t border-slate-100 bg-white/50">
             <div className="max-w-6xl mx-auto">
               {/* Partner Slider */}
               <PartnerSlider />

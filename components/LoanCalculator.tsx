@@ -43,7 +43,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onNavigate }) => {
         <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-50 text-amber-500 rounded-3xl mb-4 shadow-sm">
           <Calculator size={32} />
         </div>
-        <h2 className="text-3xl font-black text-slate-800 tracking-tight mb-2">Máy Tính Ước Lượng Khoản Vay</h2>
+        <h2 className="text-2xl sm:text-3xl font-black text-slate-800 tracking-tight mb-2">Máy Tính Ước Lượng Khoản Vay</h2>
         <p className="text-slate-500 font-medium">Lên kế hoạch tài chính thông minh chỉ trong vài giây</p>
       </div>
 
@@ -115,7 +115,7 @@ const LoanCalculator: React.FC<LoanCalculatorProps> = ({ onNavigate }) => {
           <div className="relative z-10 space-y-6">
             <div>
               <p className="text-blue-100 text-[10px] font-black uppercase tracking-widest mb-2 opacity-80">Ước tính trả hàng tháng</p>
-              <h3 className="text-4xl font-black tracking-tighter">{formatVND(calculation.monthlyPayment)}</h3>
+              <h3 className="text-3xl sm:text-4xl font-black tracking-tighter">{formatVND(calculation.monthlyPayment)}</h3>
             </div>
 
             <div className="grid grid-cols-2 gap-4 pt-4 border-t border-blue-400/30">

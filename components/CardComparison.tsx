@@ -153,8 +153,8 @@ const CardComparison: React.FC<CardComparisonProps> = ({ onSelectCard, projects 
             </div>
 
             {/* Comparison Table Body */}
-            <div className="flex-1 overflow-y-auto px-6 py-2 scrollbar-hide bg-white">
-              <table className="w-full border-collapse">
+            <div className="flex-1 overflow-y-auto px-6 py-2 scrollbar-hide bg-white overflow-x-auto">
+              <table className="w-full border-collapse min-w-[400px] sm:min-w-full">
                 <thead>
                   <tr className="border-b-2 border-slate-900">
                     <th className="py-4 text-left text-[10px] font-black text-slate-400 uppercase tracking-widest">Tiêu chí</th>
