@@ -79,6 +79,40 @@ img {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
+/* Quick Access Grid - Force 2 columns on mobile */
+.quick-access-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  width: 100% !important;
+}
+
+@media (min-width: 640px) {
+  .quick-access-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 16px !important;
+  }
+}
+
+/* Quick Access Card - Compact on mobile */
+.quick-access-card {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  padding: 12px 8px !important;
+  background: white !important;
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  min-height: auto !important;
+}
+
+@media (min-width: 640px) {
+  .quick-access-card {
+    padding: 20px !important;
+    border-radius: 24px !important;
+  }
+}
+
 /* Mobile-specific fixes */
 @media (max-width: 640px) {
   body {
@@ -91,15 +125,39 @@ img {
   textarea {
     font-size: 16px !important;
   }
+}
 
-  /* Ensure cards don't overflow */
-  .grid {
-    width: 100%;
-    max-width: 100%;
-  }
+/* Bottom Navigation - Mobile optimized */
+.bottom-nav {
+  display: flex !important;
+  justify-content: space-around !important;
+  align-items: center !important;
+  background: white !important;
+  border-top: 1px solid #e2e8f0 !important;
+  height: 56px !important;
+  padding: 0 4px !important;
+}
 
-  /* Better button touch targets */
-  button {
-    min-height: 44px;
-  }
+.bottom-nav-item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 1 !important;
+  max-width: 80px !important;
+  padding: 6px 2px !important;
+  gap: 2px !important;
+  min-height: auto !important;
+}
+
+.bottom-nav-item span {
+  font-size: 7px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 100% !important;
 }

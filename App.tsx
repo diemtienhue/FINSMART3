@@ -88,19 +88,19 @@ const App: React.FC = () => {
       </div>
 
       {/* Quick Access - Mobile optimized with clear borders */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
+      <div className="quick-access-grid">
         {[
-          { id: 'comparison', label: 'So sánh thẻ tín dụng', icon: Layers, color: 'bg-blue-600', bgLight: 'bg-blue-50' },
-          { id: 'calc', label: 'Ước tính khoản vay', icon: Calculator, color: 'bg-amber-500', bgLight: 'bg-amber-50' },
-          { id: 'cards', label: 'Thẻ tín dụng', icon: CreditCard, color: 'bg-indigo-500', bgLight: 'bg-indigo-50' },
-          { id: 'loans', label: 'Vay tiêu dùng', icon: DollarSign, color: 'bg-emerald-500', bgLight: 'bg-emerald-50' }
+          { id: 'comparison', label: 'So sánh thẻ tín dụng', icon: Layers, color: 'bg-blue-600' },
+          { id: 'calc', label: 'Ước tính khoản vay', icon: Calculator, color: 'bg-amber-500' },
+          { id: 'cards', label: 'Thẻ tín dụng', icon: CreditCard, color: 'bg-indigo-500' },
+          { id: 'loans', label: 'Vay tiêu dùng', icon: DollarSign, color: 'bg-emerald-500' }
         ].map(item => (
           <button
             key={item.id}
             onClick={() => setActiveTab(item.id as any)}
-            className="flex flex-col items-center py-4 px-2 sm:p-5 bg-white rounded-xl sm:rounded-3xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all group"
+            className="quick-access-card shadow-sm hover:shadow-md hover:border-slate-300 transition-all group"
           >
-            <div className={`w-11 h-11 sm:w-12 sm:h-12 ${item.color} text-white rounded-full sm:rounded-2xl flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-105 transition-transform shadow-md`}>
+            <div className={`w-11 h-11 sm:w-12 sm:h-12 ${item.color} text-white rounded-full flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-105 transition-transform shadow-md`}>
               <item.icon size={20} className="sm:w-6 sm:h-6" />
             </div>
             <span className="text-[9px] sm:text-[11px] font-bold text-slate-600 uppercase tracking-tight text-center leading-tight px-1">{item.label}</span>
@@ -331,20 +331,20 @@ const App: React.FC = () => {
       </div>
 
       {/* Bottom Navigation Mobile - Optimized */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white border-t border-slate-200 h-14 flex items-center justify-around shadow-[0_-2px_10px_rgba(0,0,0,0.05)] safe-area-pb">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[60] bottom-nav safe-area-pb">
         {[
           { id: 'home', label: 'Trang chủ', icon: Home },
-          { id: 'comparison', label: 'So sánh thẻ tín dụng', icon: Layers },
+          { id: 'comparison', label: 'So sánh thẻ...', icon: Layers },
           { id: 'loans', label: 'Vay', icon: DollarSign },
           { id: 'cards', label: 'Thẻ', icon: CreditCard },
         ].map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as any)}
-            className={`flex flex-col items-center justify-center gap-0.5 py-1.5 px-2 min-w-[60px] max-w-[80px] transition-all ${activeTab === tab.id ? 'text-blue-600' : 'text-slate-400'}`}
+            className={`bottom-nav-item ${activeTab === tab.id ? 'text-blue-600' : 'text-slate-400'}`}
           >
-            <tab.icon size={18} className={activeTab === tab.id ? 'scale-105' : ''} />
-            <span className="text-[8px] font-bold uppercase tracking-tight text-center leading-tight truncate w-full">{tab.label}</span>
+            <tab.icon size={18} />
+            <span>{tab.label}</span>
           </button>
         ))}
       </nav>
