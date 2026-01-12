@@ -71,17 +71,17 @@ const App: React.FC = () => {
   const HomeSection = () => (
     <div className="space-y-4 sm:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Hero Banner - Mobile optimized */}
-      <div className="relative h-[140px] sm:h-48 md:h-64 rounded-xl sm:rounded-3xl overflow-hidden shadow-lg">
+      <div className="relative h-[120px] sm:h-48 md:h-64 rounded-lg sm:rounded-3xl overflow-hidden shadow-md">
         <img src={appConfig.heroImage} className="w-full h-full object-cover" alt="hero" />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-800/70 to-transparent flex items-center p-3 sm:p-6 md:p-10">
-          <div className="max-w-[70%] sm:max-w-md">
-            <h1 className="text-base sm:text-2xl md:text-4xl font-bold text-white mb-0.5 sm:mb-2 leading-tight">{appConfig.heroTitle}</h1>
-            <p className="text-blue-100 text-[10px] sm:text-sm md:text-lg mb-2 sm:mb-6 opacity-90 line-clamp-2 leading-relaxed">{appConfig.heroSubtitle}</p>
+          <div className="max-w-[65%] sm:max-w-md">
+            <h1 className="text-sm sm:text-2xl md:text-4xl font-bold text-white mb-0.5 sm:mb-2 leading-tight">{appConfig.heroTitle}</h1>
+            <p className="text-blue-100 text-[9px] sm:text-sm md:text-lg mb-1.5 sm:mb-6 opacity-90 line-clamp-2 leading-relaxed">{appConfig.heroSubtitle}</p>
             <button
               onClick={() => setActiveTab('loans')}
-              className="px-3 sm:px-6 py-1.5 sm:py-3 bg-white text-blue-700 rounded-lg sm:rounded-xl font-bold shadow-lg hover:bg-blue-50 transition-all flex items-center gap-1 sm:gap-2 text-[10px] sm:text-sm uppercase"
+              className="px-2.5 sm:px-6 py-1 sm:py-3 bg-white text-blue-700 rounded-md sm:rounded-xl font-bold shadow-md hover:bg-blue-50 transition-all flex items-center gap-1 sm:gap-2 text-[9px] sm:text-sm uppercase"
             >
-              Khám phá ngay <ChevronRight size={14} className="sm:w-[18px] sm:h-[18px]" />
+              Khám phá ngay <ChevronRight size={12} className="sm:w-[18px] sm:h-[18px]" />
             </button>
           </div>
         </div>
@@ -90,8 +90,8 @@ const App: React.FC = () => {
       {/* Quick Access - Mobile optimized with clear borders */}
       <div className="quick-access-grid">
         {[
-          { id: 'comparison', label: 'So sánh thẻ tín dụng', icon: Layers, color: 'bg-blue-600' },
-          { id: 'calc', label: 'Ước tính khoản vay', icon: Calculator, color: 'bg-amber-500' },
+          { id: 'comparison', label: 'So sánh thẻ', icon: Layers, color: 'bg-blue-600' },
+          { id: 'calc', label: 'Ước tính vay', icon: Calculator, color: 'bg-amber-500' },
           { id: 'cards', label: 'Thẻ tín dụng', icon: CreditCard, color: 'bg-indigo-500' },
           { id: 'loans', label: 'Vay tiêu dùng', icon: DollarSign, color: 'bg-emerald-500' }
         ].map(item => (
@@ -100,10 +100,10 @@ const App: React.FC = () => {
             onClick={() => setActiveTab(item.id as any)}
             className="quick-access-card shadow-sm hover:shadow-md hover:border-slate-300 transition-all group"
           >
-            <div className={`w-11 h-11 sm:w-12 sm:h-12 ${item.color} text-white rounded-full flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-105 transition-transform shadow-md`}>
-              <item.icon size={20} className="sm:w-6 sm:h-6" />
+            <div className={`w-10 h-10 sm:w-12 sm:h-12 ${item.color} text-white rounded-full flex items-center justify-center mb-1.5 sm:mb-3 group-hover:scale-105 transition-transform shadow-md`}>
+              <item.icon size={18} className="sm:w-6 sm:h-6" />
             </div>
-            <span className="text-[9px] sm:text-[11px] font-bold text-slate-600 uppercase tracking-tight text-center leading-tight px-1">{item.label}</span>
+            <span className="text-[8px] sm:text-[11px] font-extrabold text-slate-600 uppercase tracking-tight text-center leading-[1.1] px-0.5">{item.label}</span>
           </button>
         ))}
       </div>
@@ -117,7 +117,7 @@ const App: React.FC = () => {
           <button onClick={() => setActiveTab('loans')} className="text-xs font-bold text-blue-600">Xem tất cả</button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {projects.filter(p => p.status === 'Published').slice(0, 6).map(p => (
             <ProjectCard key={p.id} project={p} onOpenDetail={setSelectedProject} />
           ))}
@@ -233,7 +233,7 @@ const App: React.FC = () => {
           </header>
 
           {/* Body Content */}
-          <div className="max-w-6xl mx-auto p-3 sm:p-4 md:p-8 w-full">
+          <div className="max-w-6xl mx-auto p-3 sm:p-4 md:p-8 w-full" style={{ maxWidth: '100%' }}>
             {activeTab === 'home' && <HomeSection />}
 
             {(activeTab === 'loans' || activeTab === 'cards') && (
@@ -248,7 +248,7 @@ const App: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
                   {filteredProjects.map(p => (
                     <ProjectCard key={p.id} project={p} onOpenDetail={setSelectedProject} />
                   ))}
