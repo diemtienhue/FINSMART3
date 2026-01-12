@@ -69,55 +69,55 @@ const App: React.FC = () => {
   };
 
   const HomeSection = () => (
-    <div className="space-y-6 sm:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      {/* Hero Banner */}
-      <div className="relative h-40 sm:h-48 md:h-64 rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl">
+    <div className="space-y-4 sm:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      {/* Hero Banner - Mobile optimized */}
+      <div className="relative h-[140px] sm:h-48 md:h-64 rounded-xl sm:rounded-3xl overflow-hidden shadow-lg">
         <img src={appConfig.heroImage} className="w-full h-full object-cover" alt="hero" />
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-transparent flex items-center p-4 sm:p-6 md:p-10">
-          <div className="max-w-md">
-            <h1 className="text-lg sm:text-2xl md:text-4xl font-bold text-white mb-1 sm:mb-2">{appConfig.heroTitle}</h1>
-            <p className="text-blue-100 text-xs sm:text-sm md:text-lg mb-3 sm:mb-6 opacity-90 line-clamp-2">{appConfig.heroSubtitle}</p>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-800/70 to-transparent flex items-center p-3 sm:p-6 md:p-10">
+          <div className="max-w-[70%] sm:max-w-md">
+            <h1 className="text-base sm:text-2xl md:text-4xl font-bold text-white mb-0.5 sm:mb-2 leading-tight">{appConfig.heroTitle}</h1>
+            <p className="text-blue-100 text-[10px] sm:text-sm md:text-lg mb-2 sm:mb-6 opacity-90 line-clamp-2 leading-relaxed">{appConfig.heroSubtitle}</p>
             <button
               onClick={() => setActiveTab('loans')}
-              className="px-4 sm:px-6 py-2 sm:py-3 bg-white text-blue-700 rounded-lg sm:rounded-xl font-bold shadow-lg hover:bg-blue-50 transition-all flex items-center gap-1 sm:gap-2 text-xs sm:text-sm uppercase"
+              className="px-3 sm:px-6 py-1.5 sm:py-3 bg-white text-blue-700 rounded-lg sm:rounded-xl font-bold shadow-lg hover:bg-blue-50 transition-all flex items-center gap-1 sm:gap-2 text-[10px] sm:text-sm uppercase"
             >
-              Khám phá ngay <ChevronRight size={16} className="sm:w-[18px] sm:h-[18px]" />
+              Khám phá ngay <ChevronRight size={14} className="sm:w-[18px] sm:h-[18px]" />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Quick Access */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+      {/* Quick Access - Mobile optimized with clear borders */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
         {[
-          { id: 'comparison', label: 'So sánh thẻ tín dụng', icon: Layers, color: 'bg-blue-600' },
-          { id: 'calc', label: 'Ước tính khoản vay', icon: Calculator, color: 'bg-amber-500' },
-          { id: 'cards', label: 'Thẻ tín dụng', icon: CreditCard, color: 'bg-indigo-500' },
-          { id: 'loans', label: 'Vay tiêu dùng', icon: DollarSign, color: 'bg-emerald-500' }
+          { id: 'comparison', label: 'So sánh thẻ tín dụng', icon: Layers, color: 'bg-blue-600', bgLight: 'bg-blue-50' },
+          { id: 'calc', label: 'Ước tính khoản vay', icon: Calculator, color: 'bg-amber-500', bgLight: 'bg-amber-50' },
+          { id: 'cards', label: 'Thẻ tín dụng', icon: CreditCard, color: 'bg-indigo-500', bgLight: 'bg-indigo-50' },
+          { id: 'loans', label: 'Vay tiêu dùng', icon: DollarSign, color: 'bg-emerald-500', bgLight: 'bg-emerald-50' }
         ].map(item => (
           <button
             key={item.id}
             onClick={() => setActiveTab(item.id as any)}
-            className="flex flex-col items-center p-3 sm:p-5 bg-white rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all group"
+            className="flex flex-col items-center py-4 px-2 sm:p-5 bg-white rounded-xl sm:rounded-3xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all group"
           >
-            <div className={`w-10 h-10 sm:w-12 sm:h-12 ${item.color} text-white rounded-xl sm:rounded-2xl flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-110 transition-transform shadow-lg`}>
+            <div className={`w-11 h-11 sm:w-12 sm:h-12 ${item.color} text-white rounded-full sm:rounded-2xl flex items-center justify-center mb-2 sm:mb-3 group-hover:scale-105 transition-transform shadow-md`}>
               <item.icon size={20} className="sm:w-6 sm:h-6" />
             </div>
-            <span className="text-[10px] sm:text-[11px] font-black text-slate-700 uppercase tracking-tight text-center leading-tight">{item.label}</span>
+            <span className="text-[9px] sm:text-[11px] font-bold text-slate-600 uppercase tracking-tight text-center leading-tight px-1">{item.label}</span>
           </button>
         ))}
       </div>
 
       {/* Featured Projects */}
       <div>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
-            <TrendingUp size={20} className="text-blue-600" /> Dự án nổi bật
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <h2 className="text-base sm:text-xl font-bold text-slate-800 flex items-center gap-2">
+            <TrendingUp size={18} className="text-blue-600 sm:w-5 sm:h-5" /> Dự án nổi bật
           </h2>
           <button onClick={() => setActiveTab('loans')} className="text-xs font-bold text-blue-600">Xem tất cả</button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {projects.filter(p => p.status === 'Published').slice(0, 6).map(p => (
             <ProjectCard key={p.id} project={p} onOpenDetail={setSelectedProject} />
           ))}
@@ -330,22 +330,21 @@ const App: React.FC = () => {
         </main>
       </div>
 
-      {/* Bottom Navigation Mobile */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white border-t border-slate-100 h-16 flex items-center justify-around shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
+      {/* Bottom Navigation Mobile - Optimized */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white border-t border-slate-200 h-14 flex items-center justify-around shadow-[0_-2px_10px_rgba(0,0,0,0.05)] safe-area-pb">
         {[
           { id: 'home', label: 'Trang chủ', icon: Home },
           { id: 'comparison', label: 'So sánh thẻ tín dụng', icon: Layers },
           { id: 'loans', label: 'Vay', icon: DollarSign },
           { id: 'cards', label: 'Thẻ', icon: CreditCard },
-          // Removed Profile from mobile bottom nav
         ].map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as any)}
-            className={`flex flex-col items-center gap-1 transition-all ${activeTab === tab.id ? 'text-blue-600' : 'text-slate-400'}`}
+            className={`flex flex-col items-center justify-center gap-0.5 py-1.5 px-2 min-w-[60px] max-w-[80px] transition-all ${activeTab === tab.id ? 'text-blue-600' : 'text-slate-400'}`}
           >
-            <tab.icon size={20} className={activeTab === tab.id ? 'scale-110' : ''} />
-            <span className="text-[9px] font-black uppercase tracking-tighter">{tab.label}</span>
+            <tab.icon size={18} className={activeTab === tab.id ? 'scale-105' : ''} />
+            <span className="text-[8px] font-bold uppercase tracking-tight text-center leading-tight truncate w-full">{tab.label}</span>
           </button>
         ))}
       </nav>
